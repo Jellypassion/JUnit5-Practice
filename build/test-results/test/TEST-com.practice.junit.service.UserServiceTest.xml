@@ -1,15 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.practice.junit.service.UserServiceTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-03-02T13:26:34" hostname="MacBook-Pro-Eugene.local" time="0.013">
+<testsuite name="com.practice.junit.service.UserServiceTest" tests="0" skipped="0" failures="0" errors="0" timestamp="1970-01-01T00:00:00" hostname="MacBook-Pro-Eugene.local" time="0.0">
   <properties/>
-  <testcase name="usersEmptyIfNoUserAdded(UserService)" classname="com.practice.junit.service.UserServiceTest" time="0.013"/>
   <system-out><![CDATA[
-Before All: com.practice.junit.service.UserServiceTest@303cf2ba
+Before All: com.practice.junit.service.UserServiceTest@5a59ca5e
 
-Before Each: com.practice.junit.service.UserServiceTest@303cf2ba
-Test 1: com.practice.junit.service.UserServiceTest@303cf2ba
-After Each: com.practice.junit.service.UserServiceTest@303cf2ba
-
-After All: com.practice.junit.service.UserServiceTest@303cf2ba
+After All: com.practice.junit.service.UserServiceTest@5a59ca5e
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

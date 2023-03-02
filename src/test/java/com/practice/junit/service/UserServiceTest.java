@@ -5,9 +5,14 @@ import org.example.UserService;
 import org.example.dto.User;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.ArgumentsSource;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -26,6 +31,15 @@ public class UserServiceTest {
 
     UserServiceTest(TestInfo testInfo) {
         System.out.println();
+    }
+
+    static Stream<Arguments> getArgumentsForLoginTest() {
+        return Stream.of(
+                Arguments.of("Ivan", "123", Optional.of(IVAN)),
+                Arguments.of("Petro", "345", Optional.of(PETRO)),
+                Arguments.of("Petro", "dummy", Optional.empty()),
+                Arguments.of("dummy", "345", Optional.empty())
+        );
     }
 
     @BeforeAll
@@ -50,8 +64,7 @@ public class UserServiceTest {
     @Test
     void usersSizeIfUserAdded() {
         System.out.println("Test 2: " + this);
-        userService.add(IVAN);
-        userService.add(PETRO);
+        userService.add(IVAN, PETRO);
 
         var users = userService.getAll();
         assertThat(users).hasSize(2);
@@ -116,6 +129,16 @@ public class UserServiceTest {
             var noUser = userService.login("abc", IVAN.getPassword());
             assertTrue(noUser.isEmpty());
         }
+
+        @ParameterizedTest(name = "{arguments} test")
+        @MethodSource("com.practice.junit.service.UserServiceTest#getArgumentsForLoginTest")
+        @DisplayName("Login Parametrized Test")
+        void loginParametrizedTest(String username, String password, Optional<User> user) {
+            userService.add(IVAN, PETRO);
+            var maybeUser = userService.login(username, password);
+            assertThat(maybeUser).isEqualTo(user);
+        }
+
     }
 
 }
