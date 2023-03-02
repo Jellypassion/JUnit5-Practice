@@ -1,23 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.practice.junit.service.UserServiceTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2023-03-02T11:01:40" hostname="MacBook-Pro-Eugene.local" time="0.092">
+<testsuite name="com.practice.junit.service.UserServiceTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-03-02T13:26:34" hostname="MacBook-Pro-Eugene.local" time="0.013">
   <properties/>
-  <testcase name="usersEmptyIfNoUserAdded()" classname="com.practice.junit.service.UserServiceTest" time="0.017"/>
-  <testcase name="usersSizeIfUserAdded()" classname="com.practice.junit.service.UserServiceTest" time="0.062"/>
-  <testcase name="usersConvertedToMapById()" classname="com.practice.junit.service.UserServiceTest" time="0.01"/>
-  <system-out><![CDATA[Before All: com.practice.junit.service.UserServiceTest@273444fe
+  <testcase name="usersEmptyIfNoUserAdded(UserService)" classname="com.practice.junit.service.UserServiceTest" time="0.013"/>
+  <system-out><![CDATA[
+Before All: com.practice.junit.service.UserServiceTest@303cf2ba
 
-Before Each: com.practice.junit.service.UserServiceTest@273444fe
-Test 1: com.practice.junit.service.UserServiceTest@273444fe
-After Each: com.practice.junit.service.UserServiceTest@273444fe
+Before Each: com.practice.junit.service.UserServiceTest@303cf2ba
+Test 1: com.practice.junit.service.UserServiceTest@303cf2ba
+After Each: com.practice.junit.service.UserServiceTest@303cf2ba
 
-Before Each: com.practice.junit.service.UserServiceTest@273444fe
-Test 2: com.practice.junit.service.UserServiceTest@273444fe
-After Each: com.practice.junit.service.UserServiceTest@273444fe
-
-Before Each: com.practice.junit.service.UserServiceTest@273444fe
-After Each: com.practice.junit.service.UserServiceTest@273444fe
-
-After All: com.practice.junit.service.UserServiceTest@273444fe
+After All: com.practice.junit.service.UserServiceTest@303cf2ba
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

@@ -1,8 +1,10 @@
 package com.practice.junit.service;
 
+import com.practice.junit.paramresolver.UserServiceParamResolver;
 import org.example.UserService;
 import org.example.dto.User;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.Map;
 import java.util.Optional;
@@ -14,10 +16,17 @@ import static org.junit.jupiter.api.Assertions.*;
 //When using this mode, a new test instance will be created once per test class.
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@ExtendWith({
+        UserServiceParamResolver.class
+})
 public class UserServiceTest {
     private static final User IVAN = User.of(1, "Ivan", "123");
     private static final User PETRO = User.of(2, "Petro", "345");
     private UserService userService = new UserService();
+
+    UserServiceTest(TestInfo testInfo) {
+        System.out.println();
+    }
 
     @BeforeAll
     void init() {
@@ -25,14 +34,14 @@ public class UserServiceTest {
     }
 
     @BeforeEach
-    void prepare() {
+    void prepare(UserService userService) {
         System.out.println(("Before Each: " + this));
-        userService = new UserService();
+        this.userService = userService;
     }
 
     @Test
     @Order(1)
-    void usersEmptyIfNoUserAdded() {
+    void usersEmptyIfNoUserAdded(UserService userService) {
         System.out.println("Test 1: " + this);
         var users = userService.getAll();
         assertTrue(users.isEmpty(), "User list should be empty");
