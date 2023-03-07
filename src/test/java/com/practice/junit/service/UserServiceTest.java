@@ -10,6 +10,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.time.Duration;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -122,12 +123,21 @@ public class UserServiceTest {
             assertTrue(noUser.isEmpty());
         }
 
-        @Test
+        //@Test
+        @RepeatedTest(5)
         void loginFailedIfUserDoesNotExist() {
             System.out.println("Test 5: " + this);
             userService.add(IVAN);
             var noUser = userService.login("abc", IVAN.getPassword());
             assertTrue(noUser.isEmpty());
+        }
+
+        @Test
+        void checkLoginFunctionalityPerformance() {
+            assertTimeout(Duration.ofMillis(300), () -> {
+                Thread.sleep(300);
+                return userService.login("abc", IVAN.getPassword());
+            });
         }
 
         @ParameterizedTest(name = "{arguments} test")

@@ -1,6 +1,5 @@
 package com.practice.junit.paramresolver;
 
-import com.practice.junit.service.UserServiceTest;
 import org.example.UserService;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.ExtensionContext.Namespace;
