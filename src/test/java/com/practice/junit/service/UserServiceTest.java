@@ -1,15 +1,19 @@
 package com.practice.junit.service;
 
-import com.practice.junit.paramresolver.UserServiceParamResolver;
+import com.practice.junit.extension.GlobalExtension;
+import com.practice.junit.extension.PostProcessingExtension;
+import com.practice.junit.extension.ThrowableExtension;
+import com.practice.junit.extension.UserServiceParamResolver;
 import org.example.UserService;
 import org.example.dto.User;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.ArgumentsSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.io.IOException;
+import java.rmi.RemoteException;
 import java.time.Duration;
 import java.util.Map;
 import java.util.Optional;
@@ -23,7 +27,10 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @ExtendWith({
-        UserServiceParamResolver.class
+        UserServiceParamResolver.class,
+//        GlobalExtension.class,
+//        PostProcessingExtension.class
+//        ThrowableExtension.class
 })
 public class UserServiceTest {
     private static final User IVAN = User.of(1, "Ivan", "123");
@@ -56,7 +63,7 @@ public class UserServiceTest {
 
     @Test
     @Order(1)
-    void usersEmptyIfNoUserAdded(UserService userService) {
+    void usersEmptyIfNoUserAdded(UserService userService) throws IOException {
         System.out.println("Test 1: " + this);
         var users = userService.getAll();
         assertTrue(users.isEmpty(), "User list should be empty");
@@ -135,7 +142,7 @@ public class UserServiceTest {
         @Test
         void checkLoginFunctionalityPerformance() {
             assertTimeout(Duration.ofMillis(300), () -> {
-                Thread.sleep(300);
+//                Thread.sleep(300);
                 return userService.login("abc", IVAN.getPassword());
             });
         }
