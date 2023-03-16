@@ -58,7 +58,7 @@ public class UserServiceTest {
     void prepare() {
         System.out.println(("Before Each: " + this));
         // This is a mock object
-        this.userDao = Mockito.mock(UserDao.class);
+        this.userDao = Mockito.spy(new UserDao());
         this.userService = new UserService(userDao);
     }
 
