@@ -1,19 +1,17 @@
 package com.practice.junit.service;
 
-import com.practice.junit.extension.GlobalExtension;
-import com.practice.junit.extension.PostProcessingExtension;
-import com.practice.junit.extension.ThrowableExtension;
 import com.practice.junit.extension.UserServiceParamResolver;
 import org.example.UserService;
+import org.example.dao.UserDao;
 import org.example.dto.User;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.mockito.Mockito;
 
 import java.io.IOException;
-import java.rmi.RemoteException;
 import java.time.Duration;
 import java.util.Map;
 import java.util.Optional;
@@ -35,7 +33,8 @@ import static org.junit.jupiter.api.Assertions.*;
 public class UserServiceTest {
     private static final User IVAN = User.of(1, "Ivan", "123");
     private static final User PETRO = User.of(2, "Petro", "345");
-    private UserService userService = new UserService();
+    private UserService userService;// = new UserService(new UserDao());
+    private UserDao userDao;
 
     UserServiceTest(TestInfo testInfo) {
         System.out.println();
@@ -56,9 +55,26 @@ public class UserServiceTest {
     }
 
     @BeforeEach
-    void prepare(UserService userService) {
+    void prepare() {
         System.out.println(("Before Each: " + this));
-        this.userService = userService;
+        // This is a mock object
+        this.userDao = Mockito.mock(UserDao.class);
+        this.userService = new UserService(userDao);
+    }
+
+    @Test
+    void shouldDeleteExistedUser() {
+        userService.add(IVAN);
+        //this is a Stub
+        Mockito.doReturn(true).when(userDao).delete(IVAN.getId());
+
+        Mockito.when(userDao.delete(IVAN.getId())).thenReturn(true);
+
+        //Mockito has a lot of standard methods for cases when we don't need to use the exact data, e.g. some dummy object
+        //Mockito.doReturn(true).when(userDao).delete(Mockito.any());
+
+        var deleteResult = userService.delete(IVAN.getId());
+        assertThat(deleteResult).isTrue();
     }
 
     @Test
