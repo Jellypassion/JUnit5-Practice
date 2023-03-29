@@ -9,7 +9,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -29,11 +32,15 @@ import static org.junit.jupiter.api.Assertions.*;
 //        GlobalExtension.class,
 //        PostProcessingExtension.class
 //        ThrowableExtension.class
+        MockitoExtension.class
 })
 public class UserServiceTest {
     private static final User IVAN = User.of(1, "Ivan", "123");
     private static final User PETRO = User.of(2, "Petro", "345");
+
+    @InjectMocks
     private UserService userService;// = new UserService(new UserDao());
+    @Mock
     private UserDao userDao;
 
     UserServiceTest(TestInfo testInfo) {
@@ -58,8 +65,8 @@ public class UserServiceTest {
     void prepare() {
         System.out.println(("Before Each: " + this));
         // This is a mock object
-        this.userDao = Mockito.spy(new UserDao());
-        this.userService = new UserService(userDao);
+//        this.userDao = Mockito.spy(new UserDao());
+//        this.userService = new UserService(userDao);
     }
 
     @Test
@@ -68,7 +75,7 @@ public class UserServiceTest {
         //this is a Stub
         Mockito.doReturn(true).when(userDao).delete(IVAN.getId());
 
-        Mockito.when(userDao.delete(IVAN.getId())).thenReturn(true);
+//        Mockito.when(userDao.delete(IVAN.getId())).thenReturn(true);
 
         //Mockito has a lot of standard methods for cases when we don't need to use the exact data, e.g. some dummy object
         //Mockito.doReturn(true).when(userDao).delete(Mockito.any());
